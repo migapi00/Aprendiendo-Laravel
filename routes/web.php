@@ -6,16 +6,14 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 
 Route::controller(PageController::class)->group(function() {
-    Route::get('/',             'home') ->name('home');
-    Route::get('blog',          'blog') ->name('blog');
-    Route::get('blog/{post:slug}',   'post') ->name('post');
+    Route::get('/',                 'home') ->name('home');
+    Route::get('blog/{post:slug}',  'post') ->name('post');
+    // Route::get('blog',          'blog') ->name('blog');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::redirect('dashboard', 'posts') ->name('dashboard');
 
-Route::resource('posts', PostController::class)->except(['show']);
+Route::resource('posts', PostController::class)->middleware(['auth', 'verified'])->except(['show']);
 
 
 Route::middleware('auth')->group(function () {

@@ -9,6 +9,18 @@
     value="{{old('title', $post->title)}}">
 
 
+
+<label class="text-xs text-gray-700 uppercase ">Slug</label>
+    @error('slug')
+        <div class="text-red-600 alert alert-danger">{{ $message }}</div>
+    @enderror
+
+<input type="text" name="slug" class="rounded border-gray-200 w-full mb-4 focus:border-red-600 @error('slug') is-invalid @enderror"
+    value="{{old('slug', $post->slug)}}">
+
+
+
+
 <label class="text-xs text-gray-700 uppercase">Contenido</label>
     @error('body')
         <div class="text-red-600 alert alert-danger">{{ $message }}</div>

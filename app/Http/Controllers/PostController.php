@@ -27,12 +27,13 @@ class PostController extends Controller
 
         $request->validate([
             'title' => 'required',
-            'body' => 'required',
+            'slug'  => 'required|unique:posts,slug',
+            'body'  => 'required',
         ]);
 
         $post = $request->user()->posts()->create([
-            'title' => $title = $request->title,
-            'slug'  => Str::slug($request->title),
+            'title' =>  $request->title,
+            'slug'  =>  $request->slug,
             'body'  =>  $request->body,
        ]);
        return redirect()->route('posts.edit', ['post' => $post]);
@@ -62,13 +63,14 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'slug'  => 'required|unique:posts,slug' . $post->id,
             'body' => 'required',
         ]);
 
 
         $post -> update ([
-            'title' => $title = $request->title,
-            'slug'  => Str::slug($request->title),
+            'title' => $request->title,
+            'slug'  => $request->slug,
             'body'  =>  $request->body,
        ]);
        return redirect()->route('posts.edit', ['post' => $post]);
